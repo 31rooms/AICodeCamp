@@ -17,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         $administrator = User::create([
-            'name' => 'Administrador Enrique',
+            'name' => 'Administrador Claude',
             'username' => 'admin',
             'email' => 'administrador@mail.com',
             'password' => 'password'
@@ -26,8 +26,8 @@ class UserSeeder extends Seeder
         $administrator->assignRole('administrador');
 
         $profesor = User::create([
-            'name' => 'Profesor Julian',
-            'username' => 'profe',
+            'name' => 'Profesor Claude',
+            'username' => 'claude',
             'email' => 'profesor@mail.com',
             'password' => 'password',
             'program_id' => Program::first()->getKey()

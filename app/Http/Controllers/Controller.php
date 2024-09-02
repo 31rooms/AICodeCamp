@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 /**
  * @OA\Info(
- *    title="Cesar Perez :: Tu Colegio Ideal ",
+ *    title="Claude Dev :: Tu Colegio Ideal ",
  *    version="1.0.0",
  * )
  * @OA\SecurityScheme(
