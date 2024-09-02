@@ -8,6 +8,8 @@ use App\Http\Controllers\API\ProgramController;
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::resource('users', UserController::class);
+    Route::post('users', [UserController::class, 'store']);
+    Route::get('users/{user}', [UserController::class, 'show']);
+    Route::get('users', [UserController::class, 'index']);
     Route::resource('programs', ProgramController::class)->only('index','show');
 });

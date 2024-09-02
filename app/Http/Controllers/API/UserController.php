@@ -11,7 +11,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\QueryBuilder;
 use OpenApi\Annotations as OA;
-
+use Illuminate\Http\JsonResponse;
 
 class UserController extends BaseController
 {
@@ -52,7 +52,7 @@ class UserController extends BaseController
      *     security={{"bearerAuth":{}}}
      * )
      */
-    public function index(RetrieveUserRequest $request)
+    public function index(RetrieveUserRequest $request): JsonResponse
     {
 
         $model = User::class;
@@ -60,7 +60,7 @@ class UserController extends BaseController
         $role = $request->input('role', 'all');
 
         if ($role !== 'all') {
-            $model = User::whereHas('roles', function ($query) use ($role) {
+            $model = User::wherehas('roles', function ($query) use ($role) {
                 $query->where('name', $role);
             });
         }
@@ -70,13 +70,17 @@ class UserController extends BaseController
         $perPage = $request->input('per_page', config('pagination.per_page'));
 
         $query = QueryBuilder::for($model)
-            ->allowedIncludes('program.students','role');;
+            ->allowedIncludes('program.students','role','contact');
 
         $rows = $paginate
             ? $query->paginate($perPage)->appends($request->query())
             : $query->get();
 
-        return response()->json($rows);
+        return [
+                'data' => $rows,
+                'status' => 'success',
+                'message' => 'Users retrieved successfully',
+            ];
     }
 
     /**
